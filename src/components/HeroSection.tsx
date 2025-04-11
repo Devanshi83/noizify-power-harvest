@@ -49,6 +49,7 @@ const HeroSection = () => {
                 src={ProductImage} 
                 alt="Noizify Sound Energy Converter" 
                 className="w-full h-auto object-cover"
+                onError={(e) => console.error('Image load error:', e)}
               />
             </div>
             
@@ -63,4 +64,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
