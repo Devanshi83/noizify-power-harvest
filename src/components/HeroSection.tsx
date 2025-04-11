@@ -1,7 +1,6 @@
-
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
-import { useState } from "react";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
@@ -19,7 +18,7 @@ const HeroSection = () => {
   };
 
   const handleImageError = () => {
-    console.log('Image failed to load, using fallback');
+    console.error('Image failed to load, using fallback');
     setImageError(true);
   };
 
@@ -91,17 +90,10 @@ const HeroSection = () => {
                       />
                     ) : (
                       <div className="bg-gray-200 w-full h-64 flex items-center justify-center">
-                        <p className="text-gray-500">Noizify Device Image</p>
+                        <p className="text-gray-500">Noizify Device Image Unavailable</p>
                       </div>
                     )}
-                    
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
-                  
-                  <div 
-                    className="absolute inset-0 bg-gradient-to-br from-white/15 via-white/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ transform: 'translateZ(25px)' }}
-                  ></div>
                 </div>
               </HoverCardTrigger>
               <HoverCardContent className="w-80 bg-white/90 backdrop-blur-sm border-noizify-primary/20">
