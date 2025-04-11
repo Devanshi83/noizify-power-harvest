@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import ProductImage from "@/public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
@@ -29,11 +30,10 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              <span className="text-gradient">Convert Noise</span> into <br />
-              Sustainable Energy
+              <span className="text-gradient">Democratizing</span> Clean Energy Through <span className="text-noizify-accent">Noise</span>
             </h1>
             <p className="text-lg text-gray-700 md:text-xl max-w-lg">
-              Noizify transforms ambient sound into usable electrical energy using advanced piezoelectric technology, making clean energy accessible anywhere.
+              Noizify empowers communities to transform environmental noise pollution into sustainable electrical energy, making clean power accessible to everyone, everywhere.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button className="bg-noizify-primary hover:bg-noizify-primary/90 text-lg py-6 px-8">
@@ -101,7 +101,7 @@ const HeroSection = () => {
               </HoverCardTrigger>
               <HoverCardContent className="w-80 bg-white/90 backdrop-blur-sm border-noizify-primary/20">
                 <h4 className="text-lg font-semibold">Noizify Device</h4>
-                <p className="text-sm text-gray-600">Our flagship energy converter transforms ambient sound waves into clean electrical power.</p>
+                <p className="text-sm text-gray-600">Our flagship energy converter transforms ambient sound waves into clean electrical power for communities worldwide.</p>
               </HoverCardContent>
             </HoverCard>
             
