@@ -1,5 +1,5 @@
-
 import { Button } from "@/components/ui/button";
+import ProductImage from "@/public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { useState } from "react";
 
@@ -83,22 +83,12 @@ const HeroSection = () => {
                     className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105"
                     style={{ transform: 'translateZ(20px)' }}
                   >
-                    {!imageError ? (
-                      <img 
-                        src="/placeholder.svg" 
-                        alt="Noizify Sound Energy Converter" 
-                        className="w-full h-auto object-contain rounded-2xl"
-                        onError={handleImageError}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-full aspect-video bg-gradient-to-r from-noizify-primary/20 to-noizify-secondary/20 rounded-2xl flex items-center justify-center p-8">
-                        <div className="text-center">
-                          <p className="text-xl font-semibold text-noizify-primary">Noizify Device</p>
-                          <p className="text-gray-600 mt-2">Our revolutionary sound-to-energy converter</p>
-                        </div>
-                      </div>
-                    )}
+                    <img 
+                      src={ProductImage}
+                      alt="Noizify Sound Energy Converter" 
+                      className="w-full h-auto object-cover"
+                      onError={(e) => console.error('Image load error:', e)}
+                    />
                     
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
