@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
+import { AudioWaveform } from "lucide-react";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [imageError, setImageError] = useState(false);
   
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -15,11 +16,6 @@ const HeroSection = () => {
       x: y * 0.01,
       y: x * 0.01
     });
-  };
-
-  const handleImageError = () => {
-    console.error('Image failed to load, using fallback');
-    setImageError(true);
   };
 
   return (
@@ -78,21 +74,39 @@ const HeroSection = () => {
                   ></div>
                   
                   <div 
-                    className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105"
+                    className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105 bg-gradient-to-br from-noizify-primary/10 to-noizify-secondary/10 p-6"
                     style={{ transform: 'translateZ(20px)' }}
                   >
-                    {!imageError ? (
-                      <img 
-                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
-                        alt="Noizify Sound Energy Converter" 
-                        className="w-full h-auto object-cover"
-                        onError={handleImageError}
-                      />
-                    ) : (
-                      <div className="bg-gray-200 w-full h-64 flex items-center justify-center">
-                        <p className="text-gray-500">Noizify Device Image Unavailable</p>
+                    <div className="flex flex-col items-center justify-center h-64 relative">
+                      <AudioWaveform className="text-noizify-primary w-16 h-16 mb-4" />
+                      
+                      <div className="flex items-end justify-center space-x-1 h-32 w-full">
+                        {[...Array(20)].map((_, i) => {
+                          const height = Math.sin((i * 0.5) + 1) * 50 + 30;
+                          return (
+                            <div 
+                              key={i}
+                              className="w-2 bg-gradient-to-t from-noizify-primary to-noizify-secondary rounded-full"
+                              style={{ 
+                                height: `${height}%`,
+                                animationName: 'wave',
+                                animationDuration: '1.5s',
+                                animationIterationCount: 'infinite',
+                                animationDelay: `${i * 0.05}s`,
+                                animationTimingFunction: 'ease-in-out'
+                              }}
+                            ></div>
+                          );
+                        })}
                       </div>
-                    )}
+
+                      <div className="mt-6 text-center">
+                        <p className="text-noizify-dark font-medium">Noizify Sound Converter</p>
+                        <p className="text-sm text-gray-600">Converting Sound to Energy</p>
+                      </div>
+
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-noizify-primary/5 to-noizify-secondary/5 rounded-2xl"></div>
+                    </div>
                   </div>
                 </div>
               </HoverCardTrigger>
