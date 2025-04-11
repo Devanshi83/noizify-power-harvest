@@ -1,12 +1,10 @@
-
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   
-  // Simple mouse parallax effect
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
@@ -22,7 +20,6 @@ const HeroSection = () => {
     <section className="pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-gradient-to-b from-noizify-light to-white">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               <span className="text-gradient">Convert Noise</span> into <br />
@@ -40,7 +37,6 @@ const HeroSection = () => {
               </Button>
             </div>
             
-            {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10 pt-4">
               <div>
                 <p className="text-3xl font-bold text-noizify-primary">85%</p>
@@ -57,7 +53,6 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Right Product Image with 3D Effects */}
           <div 
             className="relative flex justify-center items-center perspective-1000"
             onMouseMove={handleMouseMove}
@@ -72,28 +67,28 @@ const HeroSection = () => {
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  {/* 3D Shadow Effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-black/20 blur-xl transform translate-y-4 scale-[0.95] opacity-50 group-hover:opacity-70 transition-all duration-300" 
+                  <div 
+                    className="absolute inset-0 rounded-2xl bg-black/20 blur-xl transform translate-y-4 scale-[0.95] opacity-50 group-hover:opacity-70 transition-all duration-300" 
                     style={{ transform: 'translateZ(-30px)' }}
                   ></div>
                   
-                  {/* Product Image with 3D Effect */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105"
+                  <div 
+                    className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105"
                     style={{ transform: 'translateZ(20px)' }}
                   >
                     <img 
-                      src="/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png" 
+                      src="/lovable-uploads/devices/noizify-device-high-res.png" 
                       alt="Noizify Sound Energy Converter" 
-                      className="w-full h-auto object-cover"
+                      className="w-full h-auto object-contain rounded-2xl"
                       onError={(e) => console.error('Image load error:', e)}
+                      loading="lazy"
                     />
                     
-                    {/* Highlights */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   
-                  {/* Reflection/Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-br from-white/15 via-white/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{ transform: 'translateZ(25px)' }}
                   ></div>
                 </div>
@@ -104,7 +99,6 @@ const HeroSection = () => {
               </HoverCardContent>
             </HoverCard>
             
-            {/* Enhanced Decorative Elements */}
             <div className="absolute -top-12 -right-12 w-24 h-24 bg-noizify-accent/20 rounded-full blur-xl animate-float"></div>
             <div className="absolute -bottom-12 -left-12 w-16 h-16 bg-noizify-primary/20 rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }}></div>
             <div className="absolute top-1/3 -left-8 w-8 h-8 bg-noizify-secondary/20 rounded-full blur-lg animate-float" style={{ animationDelay: '0.5s' }}></div>
