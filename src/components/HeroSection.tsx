@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import ProductImage from "@/public/lovable-uploads/12a44488-37c6-432a-82f6-fb7172122d95.png";
 
 const HeroSection = () => {
   return (
@@ -41,42 +42,19 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Right Animation */}
-          <div className="relative">
-            <div className="bg-white shadow-xl rounded-2xl p-8 relative z-10 animate-float">
-              <div className="aspect-w-4 aspect-h-3 bg-gradient-to-r from-noizify-primary/10 to-noizify-secondary/10 rounded-lg flex justify-center items-center">
-                <div className="flex items-center h-full justify-around">
-                  {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                    <div 
-                      key={num}
-                      className="h-16 md:h-24 w-2 bg-noizify-primary rounded-full mx-1"
-                      style={{ 
-                        animation: `wave ${1 + num * 0.1}s ease-in-out infinite`,
-                        animationDelay: `${num * 0.1}s`,
-                        backgroundColor: num % 2 ? '#0EA5E9' : '#8B5CF6'
-                      }}
-                    />
-                  ))}
-                </div>
-                <div className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-                  <div className="relative w-24 h-24 bg-gradient-to-r from-noizify-primary to-noizify-secondary rounded-full flex items-center justify-center">
-                    <div className="absolute inset-1 bg-white rounded-full flex items-center justify-center">
-                      <div className="text-noizify-primary font-bold text-sm">NOIZIFY</div>
-                    </div>
-                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-noizify-accent rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-6 text-center">
-                <h3 className="font-bold text-gray-800">Sound Energy Conversion</h3>
-                <p className="text-gray-600 text-sm mt-1">Transforming environmental noise into clean energy</p>
-              </div>
+          {/* Right Product Image */}
+          <div className="relative flex justify-center items-center">
+            <div className="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl transform transition-all hover:scale-105">
+              <img 
+                src={ProductImage} 
+                alt="Noizify Sound Energy Converter" 
+                className="w-full h-auto object-cover"
+              />
             </div>
             
             {/* Decorative Elements */}
-            <div className="absolute top-1/2 -right-12 w-24 h-24 bg-noizify-accent/20 rounded-full blur-xl"></div>
-            <div className="absolute bottom-1/4 -left-8 w-16 h-16 bg-noizify-primary/20 rounded-full blur-xl"></div>
-            <div className="absolute top-1/4 left-1/4 w-12 h-12 bg-noizify-secondary/20 rounded-full blur-xl"></div>
+            <div className="absolute -top-12 -right-12 w-24 h-24 bg-noizify-accent/20 rounded-full blur-xl"></div>
+            <div className="absolute -bottom-12 -left-12 w-16 h-16 bg-noizify-primary/20 rounded-full blur-xl"></div>
           </div>
         </div>
       </div>
@@ -85,3 +63,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
