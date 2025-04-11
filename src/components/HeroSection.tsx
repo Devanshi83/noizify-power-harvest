@@ -1,8 +1,9 @@
 
 import { Button } from "@/components/ui/button";
-import ProductImage from "@/public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { useState } from "react";
+// Import image with correct path
+import ProductImage from "../public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
