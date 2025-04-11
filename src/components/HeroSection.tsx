@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import ProductImage from "@/public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { useState, useEffect } from "react";
 
@@ -83,7 +82,7 @@ const HeroSection = () => {
                     style={{ transform: 'translateZ(20px)' }}
                   >
                     <img 
-                      src={ProductImage} 
+                      src="/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png" 
                       alt="Noizify Sound Energy Converter" 
                       className="w-full h-auto object-cover"
                       onError={(e) => console.error('Image load error:', e)}
