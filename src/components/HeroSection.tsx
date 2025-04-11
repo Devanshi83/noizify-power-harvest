@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import ProductImage from "@/public/lovable-uploads/12a44488-37c6-432a-82f6-fb7172122d95.png";
+import ProductImage from "@/public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 
 const HeroSection = () => {
   return (
