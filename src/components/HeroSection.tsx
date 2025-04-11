@@ -83,7 +83,7 @@ const HeroSection = () => {
                   >
                     {!imageError ? (
                       <img 
-                        src="https://images.unsplash.com/photo-1518770660439-4636190af475" 
+                        src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6" 
                         alt="Noizify Sound Energy Converter" 
                         className="w-full h-auto object-cover"
                         onError={handleImageError}
