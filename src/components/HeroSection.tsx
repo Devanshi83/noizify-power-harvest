@@ -2,8 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { useState } from "react";
-// Import image with correct path
-import ProductImage from "../public/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
@@ -20,7 +18,7 @@ const HeroSection = () => {
     });
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const handleImageError = () => {
     console.log('Image failed to load, using fallback');
     setImageError(true);
   };
@@ -84,12 +82,18 @@ const HeroSection = () => {
                     className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105"
                     style={{ transform: 'translateZ(20px)' }}
                   >
-                    <img 
-                      src={ProductImage}
-                      alt="Noizify Sound Energy Converter" 
-                      className="w-full h-auto object-cover"
-                      onError={(e) => console.error('Image load error:', e)}
-                    />
+                    {!imageError ? (
+                      <img 
+                        src="/lovable-uploads/9790a408-f5d3-410b-88a7-582f2373273e.png"
+                        alt="Noizify Sound Energy Converter" 
+                        className="w-full h-auto object-cover"
+                        onError={handleImageError}
+                      />
+                    ) : (
+                      <div className="bg-gray-200 w-full h-64 flex items-center justify-center">
+                        <p className="text-gray-500">Noizify Device Image</p>
+                      </div>
+                    )}
                     
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
