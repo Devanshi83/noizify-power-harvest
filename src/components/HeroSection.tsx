@@ -1,9 +1,11 @@
+
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { useState } from "react";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [imageError, setImageError] = useState(false);
   
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -14,6 +16,11 @@ const HeroSection = () => {
       x: y * 0.01,
       y: x * 0.01
     });
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.log('Image failed to load, using fallback');
+    setImageError(true);
   };
 
   return (
@@ -76,13 +83,22 @@ const HeroSection = () => {
                     className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105"
                     style={{ transform: 'translateZ(20px)' }}
                   >
-                    <img 
-                      src="/lovable-uploads/devices/noizify-device-high-res.png" 
-                      alt="Noizify Sound Energy Converter" 
-                      className="w-full h-auto object-contain rounded-2xl"
-                      onError={(e) => console.error('Image load error:', e)}
-                      loading="lazy"
-                    />
+                    {!imageError ? (
+                      <img 
+                        src="/placeholder.svg" 
+                        alt="Noizify Sound Energy Converter" 
+                        className="w-full h-auto object-contain rounded-2xl"
+                        onError={handleImageError}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full aspect-video bg-gradient-to-r from-noizify-primary/20 to-noizify-secondary/20 rounded-2xl flex items-center justify-center p-8">
+                        <div className="text-center">
+                          <p className="text-xl font-semibold text-noizify-primary">Noizify Device</p>
+                          <p className="text-gray-600 mt-2">Our revolutionary sound-to-energy converter</p>
+                        </div>
+                      </div>
+                    )}
                     
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
