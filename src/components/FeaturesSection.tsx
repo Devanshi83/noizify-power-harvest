@@ -1,25 +1,45 @@
 
 import { Battery, Volume2, CloudLightning, HeadphonesIcon } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const FeatureCard = ({ 
   icon: Icon,
   title,
   description,
-  color
+  color,
+  visualMetric,
+  metricLabel
 }: {
   icon: React.ElementType;
   title: string;
   description: string;
   color: string;
+  visualMetric: string;
+  metricLabel: string;
 }) => {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-      <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-5`}>
-        <Icon size={24} className="text-white" />
-      </div>
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-    </div>
+    <Card className="bg-white hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <CardContent className="p-6">
+        <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-5`}>
+          <Icon size={24} className="text-white" />
+        </div>
+        <h3 className="text-xl font-bold mb-3">{title}</h3>
+        <p className="text-gray-600 mb-4">{description}</p>
+        
+        <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
+            <div 
+              className={`absolute top-0 left-0 h-full ${color.replace('bg-', 'bg-')}/80 rounded-full`}
+              style={{ width: visualMetric }}
+            ></div>
+          </div>
+          <div className="flex justify-between mt-2">
+            <span className="text-sm text-gray-600">0</span>
+            <span className={`text-sm font-medium ${color.replace('bg-', 'text-')}`}>{metricLabel}</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
@@ -28,26 +48,34 @@ const FeaturesSection = () => {
     {
       icon: Volume2,
       title: "Noise Absorption",
-      description: "Absorbs ambient noise and reduces sound pollution in your environment by up to 30dB.",
-      color: "bg-noizify-primary"
+      description: "Absorbs ambient noise and reduces sound pollution in your environment.",
+      color: "bg-noizify-primary",
+      visualMetric: "75%",
+      metricLabel: "30dB Reduction"
     },
     {
       icon: Battery,
       title: "Energy Conversion",
-      description: "Transforms captured sound waves into usable electrical energy to power small devices.",
-      color: "bg-noizify-secondary"
+      description: "Transforms captured sound waves into usable electrical energy.",
+      color: "bg-noizify-secondary",
+      visualMetric: "85%",
+      metricLabel: "85% Efficiency"
     },
     {
       icon: CloudLightning,
       title: "Efficient Storage",
-      description: "Advanced capacitors store harvested energy for on-demand use when you need it most.",
-      color: "bg-noizify-accent"
+      description: "Advanced capacitors store harvested energy for on-demand use.",
+      color: "bg-noizify-accent",
+      visualMetric: "90%",
+      metricLabel: "24hr Capacity" 
     },
     {
       icon: HeadphonesIcon,
       title: "Smart Monitoring",
-      description: "Track energy generation and device performance through our companion mobile app.",
-      color: "bg-noizify-green"
+      description: "Track energy generation and device performance through our app.",
+      color: "bg-noizify-green",
+      visualMetric: "65%",
+      metricLabel: "Real-time Data"
     }
   ];
 
