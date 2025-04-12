@@ -11,12 +11,16 @@ const MetricCard = ({
   value,
   suffix,
   color,
+  iconColor,
+  iconBackground
 }: {
   icon: React.ElementType;
   title: string;
   value: number;
   suffix?: string;
   color: string;
+  iconColor: string;
+  iconBackground: string;
 }) => {
   const [count, setCount] = useState(0);
   
@@ -34,10 +38,10 @@ const MetricCard = ({
     <Card className="bg-white hover:shadow-xl transition-all duration-300">
       <CardContent className="p-5">
         <div className="flex items-center justify-between mb-3">
-          <div className={`w-10 h-10 rounded-full ${color} flex items-center justify-center`}>
-            <Icon size={20} className="text-white" />
+          <div className={`w-10 h-10 rounded-full ${iconBackground} flex items-center justify-center`}>
+            <Icon size={20} className={`${iconColor}`} />
           </div>
-          <span className={`text-xl font-bold ${color.replace('bg-', 'text-')}`}>
+          <span className={`text-xl font-bold ${color}`}>
             {count}{suffix}
           </span>
         </div>
@@ -53,6 +57,8 @@ const FeatureCard = ({
   title,
   description,
   color,
+  iconBackground,
+  iconColor,
   visualMetric,
   metricLabel,
   progress
@@ -61,6 +67,8 @@ const FeatureCard = ({
   title: string;
   description: string;
   color: string;
+  iconBackground: string;
+  iconColor: string;
   visualMetric: string;
   metricLabel: string;
   progress: number;
@@ -80,8 +88,8 @@ const FeatureCard = ({
   return (
     <Card className="bg-white hover:shadow-xl transition-all duration-300 overflow-hidden">
       <CardContent className="p-6">
-        <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-5`}>
-          <Icon size={24} className="text-white" />
+        <div className={`w-12 h-12 rounded-lg ${iconBackground} flex items-center justify-center mb-5`}>
+          <Icon size={24} className={`${iconColor}`} />
         </div>
         <h3 className="text-xl font-bold mb-3">{title}</h3>
         <p className="text-gray-600 mb-4">{description}</p>
@@ -90,7 +98,7 @@ const FeatureCard = ({
           <Progress 
             value={currentProgress} 
             className={`h-3 bg-gray-100`} 
-            indicatorClassName={`${color.replace('bg-', 'bg-')}/80`}
+            indicatorClassName={`${color}`}
           />
           <div className="flex justify-between mt-2">
             <span className="text-sm text-gray-600">0</span>
@@ -136,6 +144,8 @@ const FeaturesSection = () => {
       title: "Noise Absorption",
       description: "Absorbs ambient noise and reduces sound pollution in your environment.",
       color: "bg-noizify-primary",
+      iconBackground: "bg-blue-100", 
+      iconColor: "text-noizify-primary",
       visualMetric: "75%",
       metricLabel: "30dB Reduction",
       progress: 75
@@ -145,6 +155,8 @@ const FeaturesSection = () => {
       title: "Energy Conversion",
       description: "Transforms captured sound waves into usable electrical energy.",
       color: "bg-noizify-secondary",
+      iconBackground: "bg-purple-100",
+      iconColor: "text-noizify-secondary",
       visualMetric: "85%",
       metricLabel: "85% Efficiency",
       progress: 85
@@ -154,6 +166,8 @@ const FeaturesSection = () => {
       title: "Efficient Storage",
       description: "Advanced capacitors store harvested energy for on-demand use.",
       color: "bg-noizify-accent",
+      iconBackground: "bg-orange-100",
+      iconColor: "text-noizify-accent",
       visualMetric: "90%",
       metricLabel: "24hr Capacity",
       progress: 90 
@@ -163,6 +177,8 @@ const FeaturesSection = () => {
       title: "Smart Monitoring",
       description: "Track energy generation and device performance through our app.",
       color: "bg-noizify-green",
+      iconBackground: "bg-green-100",
+      iconColor: "text-noizify-green",
       visualMetric: "65%",
       metricLabel: "Real-time Data",
       progress: 65
@@ -175,28 +191,36 @@ const FeaturesSection = () => {
       title: "Best Noise Zones", 
       value: 8, 
       suffix: "", 
-      color: "bg-blue-100" 
+      color: "text-blue-600",
+      iconColor: "text-white", 
+      iconBackground: "bg-gradient-to-br from-blue-400 to-blue-600" 
     },
     { 
       icon: Award, 
       title: "Rewards", 
       value: 15, 
       suffix: "", 
-      color: "bg-yellow-100" 
+      color: "text-amber-500",
+      iconColor: "text-white", 
+      iconBackground: "bg-gradient-to-br from-amber-400 to-amber-600" 
     },
     { 
       icon: Clock, 
       title: "Peak Time Alerts", 
       value: 24, 
       suffix: "h", 
-      color: "bg-purple-100" 
+      color: "text-purple-600",
+      iconColor: "text-white", 
+      iconBackground: "bg-gradient-to-br from-purple-400 to-purple-600" 
     },
     { 
       icon: BarChart3, 
       title: "Real-time Tracking", 
       value: 100, 
       suffix: "%", 
-      color: "bg-indigo-100" 
+      color: "text-indigo-600",
+      iconColor: "text-white", 
+      iconBackground: "bg-gradient-to-br from-indigo-400 to-indigo-600" 
     }
   ];
 
@@ -233,7 +257,7 @@ const FeaturesSection = () => {
                     {[...Array(20)].map((_, i) => (
                       <div 
                         key={i} 
-                        className="w-1.5 mx-0.5 rounded-full bg-noizify-primary" 
+                        className="w-1.5 mx-0.5 rounded-full bg-gradient-to-t from-noizify-primary to-noizify-secondary" 
                         style={{
                           height: `${20 + Math.sin(i/2) * 60}%`,
                           animationDelay: `${i * 0.1}s`,
