@@ -347,7 +347,9 @@ const FeaturesSection = () => {
       unlocked: false, 
       progress: 65,
       color: "bg-gradient-to-br from-amber-100 to-amber-50",
-      textColor: "text-amber-800"
+      textColor: "text-amber-800",
+      iconColor: "text-amber-600",
+      iconBackground: "bg-amber-100"
     },
     { 
       icon: Award, 
@@ -356,7 +358,9 @@ const FeaturesSection = () => {
       unlocked: false, 
       progress: 30,
       color: "bg-gradient-to-br from-amber-100 to-amber-50",
-      textColor: "text-amber-800"
+      textColor: "text-amber-800",
+      iconColor: "text-amber-600",
+      iconBackground: "bg-amber-100"
     }
   ];
 
