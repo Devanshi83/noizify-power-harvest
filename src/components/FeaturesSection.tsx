@@ -534,36 +534,6 @@ const FeaturesSection = () => {
             </div>
           </div>
         </div>
-
-        <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold mb-4">Navigation</h3>
-          <div className="inline-flex bg-white rounded-full p-2 shadow-md">
-            <div className="px-6 py-2 text-center border-r border-gray-200">
-              <div className="text-noizify-primary">
-                <svg className="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="text-xs mt-1">Home</div>
-            </div>
-            <div className="px-6 py-2 text-center border-r border-gray-200">
-              <div className="text-gray-400">
-                <svg className="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582a1 1 0 01.646.942V9.5a1 1 0 01-.5.866l-4 2.31a1 1 0 01-1 0l-4-2.31A1 1 0 015 9.5V6.847a1 1 0 01.646-.942L9.5 4.323V3a1 1 0 011-1z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="text-xs mt-1">Insights</div>
-            </div>
-            <div className="px-6 py-2 text-center">
-              <div className="text-gray-400">
-                <svg className="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z" />
-                </svg>
-              </div>
-              <div className="text-xs mt-1">Store</div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
