@@ -2,11 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
-import { AudioWaveform } from "lucide-react";
+import { AudioWaveform, Search, ArrowLeft, ChevronRight } from "lucide-react";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Badge } from "@/components/ui/badge";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [progressValue, setProgressValue] = useState(0);
+  const [activeProduct, setActiveProduct] = useState(0);
   
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -25,6 +35,33 @@ const HeroSection = () => {
     }, 500);
     return () => clearTimeout(timer);
   }, []);
+
+  const products = [
+    {
+      id: 1,
+      name: "EchoWattz",
+      image: "/lovable-uploads/fcf6e115-985f-4278-be0b-f97b9159b1c0.png",
+      description: "A compact, AI-powered gadget that converts noise into electricity. Easily wearable or mountable, it tracks energy collection in real time and syncs with the Noizify app for insights and optimization.",
+      efficiency: "89%",
+      status: "New"
+    },
+    {
+      id: 2,
+      name: "WaveCaptor Pro",
+      image: "/placeholder.svg",
+      description: "Our premium sound-to-energy solution with extended battery life and enhanced noise absorption capabilities for industrial environments.",
+      efficiency: "92%",
+      status: "Popular"
+    },
+    {
+      id: 3,
+      name: "SonicPower Mini",
+      image: "/placeholder.svg",
+      description: "The portable solution for on-the-go energy harvesting, perfect for urban commuters and digital nomads.",
+      efficiency: "78%",
+      status: "Limited"
+    }
+  ];
 
   return (
     <section className="pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-gradient-to-b from-noizify-light to-white">
@@ -67,62 +104,96 @@ const HeroSection = () => {
             onMouseMove={handleMouseMove}
             onMouseLeave={() => setRotation({ x: 0, y: 0 })}
           >
-            <HoverCard openDelay={0} closeDelay={0}>
-              <HoverCardTrigger asChild>
+            <div className="w-full">
+              {/* Product Showcase */}
+              <div className="bg-white rounded-2xl p-6 shadow-2xl overflow-hidden border border-gray-100">
+                {/* Store Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="sm" className="rounded-full p-0 w-8 h-8">
+                      <ArrowLeft className="w-4 h-4" />
+                    </Button>
+                    <div className="flex items-center">
+                      <div className="bg-gray-50 px-3 py-2 rounded-lg">
+                        <img 
+                          src="https://via.placeholder.com/80x20" 
+                          alt="Noizify Logo" 
+                          className="h-5" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="ghost" size="sm" className="rounded-full p-0 w-8 h-8 bg-violet-100 text-violet-500 hover:bg-violet-200">
+                    <span className="sr-only">User profile</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </Button>
+                </div>
+
+                <h2 className="text-2xl font-bold mb-4">Noizify Store</h2>
+                
+                {/* Search Bar */}
+                <div className="relative mb-6">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <input 
+                    type="text" 
+                    placeholder="Search devices" 
+                    className="w-full bg-gray-50 py-2 pl-10 pr-4 rounded-lg border-0 focus:ring-2 focus:ring-noizify-primary/20 text-sm"
+                  />
+                </div>
+                
+                {/* Featured Product */}
                 <div 
-                  className="relative w-full max-w-md group cursor-pointer transition-all duration-300"
+                  className="relative rounded-xl overflow-hidden mb-4 bg-gradient-to-br from-gray-700 to-gray-900" 
                   style={{
                     transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  <div 
-                    className="absolute inset-0 rounded-2xl bg-black/20 blur-xl transform translate-y-4 scale-[0.95] opacity-50 group-hover:opacity-70 transition-all duration-300" 
-                    style={{ transform: 'translateZ(-30px)' }}
-                  ></div>
-                  
-                  <div 
-                    className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-300 group-hover:scale-105 bg-gradient-to-br from-noizify-primary/10 to-noizify-secondary/10 p-6"
-                    style={{ transform: 'translateZ(20px)' }}
-                  >
-                    <div className="flex flex-col items-center justify-center h-64 relative">
-                      <AudioWaveform className="text-noizify-primary w-16 h-16 mb-4" />
-                      
-                      <div className="flex items-end justify-center space-x-1 h-32 w-full">
-                        {[...Array(20)].map((_, i) => {
-                          const height = Math.sin((i * 0.5) + 1) * 50 + 30;
-                          return (
-                            <div 
-                              key={i}
-                              className="w-2 bg-gradient-to-t from-noizify-primary to-noizify-secondary rounded-full"
-                              style={{ 
-                                height: `${height}%`,
-                                animationName: 'wave',
-                                animationDuration: '1.5s',
-                                animationIterationCount: 'infinite',
-                                animationDelay: `${i * 0.05}s`,
-                                animationTimingFunction: 'ease-in-out'
-                              }}
-                            ></div>
-                          );
-                        })}
-                      </div>
-
-                      <div className="mt-6 text-center">
-                        <p className="text-noizify-dark font-medium">Noizify Sound Converter</p>
-                        <p className="text-sm text-gray-600">Converting Sound to Energy</p>
-                      </div>
-
-                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-noizify-primary/5 to-noizify-secondary/5 rounded-2xl"></div>
-                    </div>
+                  <div className="aspect-square h-full w-full relative">
+                    <img 
+                      src={products[activeProduct].image} 
+                      alt={products[activeProduct].name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
-              </HoverCardTrigger>
-              <HoverCardContent className="w-80 bg-white/90 backdrop-blur-sm border-noizify-primary/20">
-                <h4 className="text-lg font-semibold">Noizify Device</h4>
-                <p className="text-sm text-gray-600">Our flagship energy converter transforms ambient sound waves into clean electrical power for communities worldwide.</p>
-              </HoverCardContent>
-            </HoverCard>
+                
+                {/* Product Indicator Dots */}
+                <div className="flex justify-center gap-2 mb-4">
+                  {products.map((product, index) => (
+                    <button 
+                      key={product.id} 
+                      onClick={() => setActiveProduct(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${index === activeProduct ? 'bg-green-500 scale-125' : 'bg-gray-300'}`}
+                      aria-label={`View ${product.name}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Product Info */}
+                <div className="space-y-2 mb-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-2xl font-bold">{products[activeProduct].name}</h3>
+                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                      {products[activeProduct].status}
+                    </Badge>
+                  </div>
+                  <p className="text-gray-700 text-sm">{products[activeProduct].description}</p>
+                </div>
+                
+                <div className="flex justify-between items-center mt-4">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-800">
+                    {products[activeProduct].efficiency} Efficient
+                  </span>
+                  <Button variant="ghost" className="text-noizify-primary hover:bg-noizify-primary/5 p-0 h-8">
+                    Details <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </div>
+              </div>
+            </div>
             
             <div className="absolute -top-12 -right-12 w-24 h-24 bg-noizify-accent/20 rounded-full blur-xl animate-float"></div>
             <div className="absolute -bottom-12 -left-12 w-16 h-16 bg-noizify-primary/20 rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }}></div>
