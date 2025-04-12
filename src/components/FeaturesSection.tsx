@@ -116,13 +116,17 @@ const AchievementBadge = ({
   title, 
   level, 
   unlocked, 
-  progress 
+  progress,
+  color,
+  textColor
 }: { 
   icon: React.ElementType; 
   title: string; 
   level: number; 
   unlocked: boolean; 
   progress: number;
+  color?: string;
+  textColor?: string;
 }) => {
   const [animate, setAnimate] = useState(false);
   
@@ -138,10 +142,10 @@ const AchievementBadge = ({
     <div className={`group relative ${animate ? 'animate-fade-in' : 'opacity-0'}`}>
       <div className={`
         rounded-xl p-4 flex flex-col items-center justify-center relative 
-        ${unlocked 
+        ${!unlocked && color ? color : (unlocked 
           ? 'bg-gradient-to-br from-amber-100 to-amber-50 shadow-md' 
           : 'bg-gray-100'
-        }
+        )}
         transition-all duration-300
         hover:scale-105
         ${unlocked ? 'hover:shadow-xl hover:shadow-amber-200/50' : ''}
@@ -170,7 +174,7 @@ const AchievementBadge = ({
           )}
         </div>
         
-        <h4 className={`text-sm font-bold ${unlocked ? 'text-gray-800' : 'text-gray-400'} text-center mb-1`}>
+        <h4 className={`text-sm font-bold ${!unlocked && textColor ? textColor : (unlocked ? 'text-gray-800' : 'text-gray-400')} text-center mb-1`}>
           {title}
         </h4>
         
@@ -341,14 +345,18 @@ const FeaturesSection = () => {
       title: "Goal Setter", 
       level: 0, 
       unlocked: false, 
-      progress: 65 
+      progress: 65,
+      color: "bg-gradient-to-br from-green-100 to-green-200",
+      textColor: "text-green-800"
     },
     { 
       icon: Award, 
       title: "Master Harvester", 
       level: 0, 
       unlocked: false, 
-      progress: 30 
+      progress: 30,
+      color: "bg-gradient-to-br from-purple-100 to-purple-200",
+      textColor: "text-purple-800"
     }
   ];
 
