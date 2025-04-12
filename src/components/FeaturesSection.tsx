@@ -1,4 +1,4 @@
-import { Bell, Award, Clock, BarChart3, Battery, Volume2, CloudLightning, HeadphonesIcon, Trophy, Medal, Star, CheckCircle, Target } from "lucide-react";
+import { Bell, Award, Clock, BarChart3, Battery, Volume2, CloudLightning, HeadphonesIcon, Trophy, Medal, Star, CheckCircle, Target, MapPin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from "react";
@@ -231,8 +231,42 @@ const SimpleChart = () => {
   );
 };
 
+const NoiseZoneItem = ({ 
+  image, 
+  place, 
+  level, 
+  levelColor 
+}: { 
+  image: string; 
+  place: string; 
+  level: string; 
+  levelColor: string;
+}) => {
+  return (
+    <div className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+      <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0">
+        <img 
+          src={image} 
+          alt={place} 
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "public/placeholder.svg";
+          }}
+        />
+      </div>
+      <div>
+        <h4 className="text-lg font-medium">{place}</h4>
+        <p className={`text-sm ${levelColor}`}>Noise level: {level}</p>
+      </div>
+    </div>
+  );
+};
+
 const FeaturesSection = () => {
   const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
+  const [isNoiseZonesDialogOpen, setIsNoiseZonesDialogOpen] = useState(false);
+  const [isTrackingDialogOpen, setIsTrackingDialogOpen] = useState(false);
 
   const features = [
     {
@@ -289,7 +323,8 @@ const FeaturesSection = () => {
       suffix: "", 
       color: "text-blue-600",
       iconColor: "text-white", 
-      iconBackground: "bg-gradient-to-br from-blue-400 to-blue-600" 
+      iconBackground: "bg-gradient-to-br from-blue-400 to-blue-600",
+      onClick: () => setIsNoiseZonesDialogOpen(true)
     },
     { 
       icon: Award, 
@@ -317,7 +352,8 @@ const FeaturesSection = () => {
       suffix: "%", 
       color: "text-indigo-600",
       iconColor: "text-white", 
-      iconBackground: "bg-gradient-to-br from-indigo-400 to-indigo-600" 
+      iconBackground: "bg-gradient-to-br from-indigo-400 to-indigo-600",
+      onClick: () => setIsTrackingDialogOpen(true)
     }
   ];
 
@@ -381,6 +417,39 @@ const FeaturesSection = () => {
     { name: "Sarah Chen", avatar: "", points: 795, badge: "Champion" }
   ];
 
+  const noiseZones = [
+    { 
+      image: "public/lovable-uploads/b6b16dad-5a49-40c7-9d34-01dc59d939c8.png", 
+      place: "Place 1", 
+      level: "Low", 
+      levelColor: "text-green-600" 
+    },
+    { 
+      image: "public/lovable-uploads/b6b16dad-5a49-40c7-9d34-01dc59d939c8.png", 
+      place: "Place 2", 
+      level: "Moderate", 
+      levelColor: "text-orange-500" 
+    },
+    { 
+      image: "public/lovable-uploads/b6b16dad-5a49-40c7-9d34-01dc59d939c8.png", 
+      place: "Place 3", 
+      level: "High", 
+      levelColor: "text-red-500" 
+    },
+    { 
+      image: "public/lovable-uploads/b6b16dad-5a49-40c7-9d34-01dc59d939c8.png", 
+      place: "Place 4", 
+      level: "Very High", 
+      levelColor: "text-red-600 font-medium" 
+    },
+    { 
+      image: "public/lovable-uploads/b6b16dad-5a49-40c7-9d34-01dc59d939c8.png", 
+      place: "Place 5", 
+      level: "Moderate", 
+      levelColor: "text-orange-500" 
+    }
+  ];
+
   return (
     <section id="features" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -400,6 +469,83 @@ const FeaturesSection = () => {
             <MetricCard key={index} {...metric} />
           ))}
         </div>
+
+        <Dialog open={isNoiseZonesDialogOpen} onOpenChange={setIsNoiseZonesDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">Zone Details</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-2 max-h-[70vh] overflow-y-auto">
+              {noiseZones.map((zone, index) => (
+                <NoiseZoneItem key={index} {...zone} />
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={isTrackingDialogOpen} onOpenChange={setIsTrackingDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">Real-time Tracking</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 py-4">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-100">
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">Live Energy Monitoring</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-blue-700">Current Output</span>
+                    <Badge className="bg-blue-600">12.4 W</Badge>
+                  </div>
+                  <Progress value={78} className="h-2 bg-blue-100" indicatorClassName="bg-blue-600" />
+                  <div className="flex justify-between text-xs text-blue-600">
+                    <span>0W</span>
+                    <span>15W</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
+                  <div className="flex items-center gap-2 mb-2">
+                    <MapPin size={16} className="text-indigo-500" />
+                    <h4 className="text-sm font-medium">Active Zones</h4>
+                  </div>
+                  <p className="text-2xl font-bold text-indigo-600">6/8</p>
+                  <p className="text-xs text-gray-500 mt-1">75% utilization</p>
+                </div>
+                
+                <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Battery size={16} className="text-green-500" />
+                    <h4 className="text-sm font-medium">Battery Status</h4>
+                  </div>
+                  <p className="text-2xl font-bold text-green-600">87%</p>
+                  <p className="text-xs text-gray-500 mt-1">8.2 hrs remaining</p>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
+                <h4 className="text-sm font-medium mb-3">Recent Activity</h4>
+                <div className="space-y-2">
+                  {[
+                    { time: "10:42 AM", event: "Peak noise detected in Zone 2", highlight: true },
+                    { time: "09:15 AM", event: "Energy storage reached 80%", highlight: false },
+                    { time: "08:30 AM", event: "Device maintenance completed", highlight: false },
+                    { time: "Yesterday", event: "System update installed", highlight: false },
+                  ].map((activity, i) => (
+                    <div key={i} className={`flex items-center gap-3 p-2 rounded-md ${activity.highlight ? "bg-blue-50" : ""}`}>
+                      <div className={`w-2 h-2 rounded-full ${activity.highlight ? "bg-blue-500 animate-pulse" : "bg-gray-300"}`}></div>
+                      <div className="flex-1">
+                        <p className="text-sm">{activity.event}</p>
+                        <p className="text-xs text-gray-500">{activity.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         <Dialog open={isAlertDialogOpen} onOpenChange={setIsAlertDialogOpen}>
           <DialogContent>
