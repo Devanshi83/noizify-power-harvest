@@ -1,10 +1,12 @@
-
-import { Bell, Award, Clock, BarChart3, Battery, Volume2, CloudLightning, HeadphonesIcon } from "lucide-react";
+import { Bell, Award, Clock, BarChart3, Battery, Volume2, CloudLightning, HeadphonesIcon, Trophy, Medal, Star, CheckCircle, Target } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
-// Metric card component with animated value
 const MetricCard = ({ 
   icon: Icon,
   title,
@@ -51,7 +53,6 @@ const MetricCard = ({
   );
 };
 
-// Feature card with progress bar
 const FeatureCard = ({ 
   icon: Icon,
   title,
@@ -110,11 +111,94 @@ const FeatureCard = ({
   );
 };
 
-// Chart component for the trends section
+const AchievementBadge = ({ 
+  icon: Icon, 
+  title, 
+  level, 
+  unlocked, 
+  progress 
+}: { 
+  icon: React.ElementType; 
+  title: string; 
+  level: number; 
+  unlocked: boolean; 
+  progress: number;
+}) => {
+  const [animate, setAnimate] = useState(false);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimate(true);
+    }, Math.random() * 500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className={`group relative ${animate ? 'animate-fade-in' : 'opacity-0'}`}>
+      <div className={`
+        rounded-xl p-4 flex flex-col items-center justify-center relative 
+        ${unlocked 
+          ? 'bg-gradient-to-br from-amber-100 to-amber-50 shadow-md' 
+          : 'bg-gray-100'
+        }
+        transition-all duration-300
+        hover:scale-105
+        ${unlocked ? 'hover:shadow-xl hover:shadow-amber-200/50' : ''}
+        aspect-square
+      `}>
+        <div className={`
+          absolute inset-0 rounded-xl 
+          ${unlocked ? 'bg-amber-500/5' : 'bg-gray-200/50'} 
+          ${unlocked && level >= 3 ? 'animate-pulse' : ''}
+        `} />
+        
+        <div className={`
+          relative w-14 h-14 rounded-full flex items-center justify-center mb-3
+          ${unlocked 
+            ? 'bg-gradient-to-br from-amber-400 to-amber-600' 
+            : 'bg-gray-300'
+          }
+          ${unlocked ? 'shadow-lg shadow-amber-200/50' : ''}
+        `}>
+          <Icon size={28} className={`${unlocked ? 'text-white' : 'text-gray-400'}`} />
+          
+          {level >= 2 && unlocked && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-indigo-500 text-white text-xs flex items-center justify-center shadow-md">
+              {level}
+            </span>
+          )}
+        </div>
+        
+        <h4 className={`text-sm font-bold ${unlocked ? 'text-gray-800' : 'text-gray-400'} text-center mb-1`}>
+          {title}
+        </h4>
+        
+        {!unlocked && progress > 0 && (
+          <>
+            <Progress value={progress} className="h-1 w-16 mt-1 bg-gray-200" indicatorClassName="bg-amber-400" />
+            <span className="text-xs text-gray-400 mt-1">{progress}%</span>
+          </>
+        )}
+
+        <div className={`
+          absolute -top-1 -right-1
+          transition-opacity duration-300
+          opacity-0 group-hover:opacity-100
+          ${!unlocked ? 'hidden' : ''}
+        `}>
+          {Array(level).fill(0).map((_, i) => (
+            <Star key={i} size={10} fill="#FFD700" stroke="#FFD700" className="inline-block" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const SimpleChart = () => {
   return (
     <div className="relative h-32 w-full mt-4">
-      {/* Bars for bar chart */}
       <div className="absolute bottom-0 left-0 w-full h-full flex items-end justify-between px-2">
         {[35, 45, 25, 55, 65, 40, 60, 75, 50, 85, 70, 90].map((height, i) => (
           <div 
@@ -124,7 +208,6 @@ const SimpleChart = () => {
           />
         ))}
       </div>
-      {/* Line for trend line */}
       <svg className="absolute top-0 left-0 w-full h-full" style={{overflow: 'visible'}}>
         <path 
           d={`M 10 ${32*0.65} C 40 ${32*0.55}, 80 ${32*0.75}, 100 ${32*0.25} S 150 ${32*0.15}, 200 ${32*0.45} S 250 ${32*0.2}, 300 ${32*0.3}`} 
@@ -224,6 +307,58 @@ const FeaturesSection = () => {
     }
   ];
 
+  const achievements = [
+    { 
+      icon: Trophy, 
+      title: "First Energy", 
+      level: 3, 
+      unlocked: true, 
+      progress: 100 
+    },
+    { 
+      icon: Medal, 
+      title: "Efficient Producer", 
+      level: 2, 
+      unlocked: true, 
+      progress: 100 
+    },
+    { 
+      icon: Star, 
+      title: "Noise Reducer", 
+      level: 3, 
+      unlocked: true, 
+      progress: 100 
+    },
+    { 
+      icon: CheckCircle, 
+      title: "Sustainability Hero", 
+      level: 1, 
+      unlocked: true, 
+      progress: 100 
+    },
+    { 
+      icon: Target, 
+      title: "Goal Setter", 
+      level: 0, 
+      unlocked: false, 
+      progress: 65 
+    },
+    { 
+      icon: Award, 
+      title: "Master Harvester", 
+      level: 0, 
+      unlocked: false, 
+      progress: 30 
+    }
+  ];
+
+  const leaderboardUsers = [
+    { name: "Alex Johnson", avatar: "", points: 950, badge: "Pioneer" },
+    { name: "Maria Garcia", avatar: "", points: 875, badge: "Innovator" },
+    { name: "James Wilson", avatar: "", points: 820, badge: "Specialist" },
+    { name: "Sarah Chen", avatar: "", points: 795, badge: "Champion" }
+  ];
+
   return (
     <section id="features" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -238,7 +373,6 @@ const FeaturesSection = () => {
           </p>
         </div>
 
-        {/* Metrics Row - Similar to the reference image */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {metrics.map((metric, index) => (
             <MetricCard key={index} {...metric} />
@@ -253,7 +387,6 @@ const FeaturesSection = () => {
                 <h4 className="text-lg font-medium mb-2">Current Energy Level</h4>
                 <div className="bg-gray-50 rounded-lg p-4 relative h-44 overflow-hidden">
                   <div className="flex items-center h-full justify-center">
-                    {/* Sound wave visualization */}
                     {[...Array(20)].map((_, i) => (
                       <div 
                         key={i} 
@@ -291,8 +424,119 @@ const FeaturesSection = () => {
           ))}
         </div>
 
+        <div className="mt-24 mb-12">
+          <div className="text-center mb-8">
+            <Badge variant="outline" className="mb-2 text-noizify-secondary border-noizify-secondary py-1 px-3">New</Badge>
+            <h3 className="text-2xl font-bold mb-3">Your Achievements</h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Track your progress and earn rewards as you harness more clean energy and reduce noise pollution in your environment.
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-md p-6 md:p-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-amber-100/30 to-amber-50/10 rounded-full -mr-32 -mt-32"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-100/20 to-purple-50/5 rounded-full -ml-32 -mb-32"></div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8 relative z-10">
+              {achievements.map((achievement, index) => (
+                <AchievementBadge key={index} {...achievement} />
+              ))}
+            </div>
+            
+            <div className="mt-10 pt-6 border-t border-gray-100 relative z-10">
+              <h4 className="text-lg font-bold mb-4 flex items-center">
+                <Trophy size={18} className="text-amber-500 mr-2" /> Leaderboard
+              </h4>
+              
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {leaderboardUsers.map((user, index) => (
+                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/4">
+                      <Card className="bg-gradient-to-br from-gray-50 to-white border-0 shadow-sm hover:shadow-md transition-shadow">
+                        <CardContent className="p-4 flex items-center gap-3">
+                          <Avatar className={`border-2 ${index === 0 ? 'border-amber-400' : index === 1 ? 'border-gray-300' : index === 2 ? 'border-amber-700' : 'border-blue-300'}`}>
+                            <AvatarImage src={user.avatar} />
+                            <AvatarFallback className="bg-gradient-to-br from-noizify-primary/90 to-noizify-secondary/90 text-white">
+                              {user.name.split(' ').map(n => n[0]).join('')}
+                            </AvatarFallback>
+                          </Avatar>
+                          
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <p className="text-sm font-medium">{user.name}</p>
+                              <Badge variant="secondary" className="text-xs">{user.badge}</Badge>
+                            </div>
+                            <div className="flex items-center mt-1">
+                              <Star size={12} fill="gold" stroke="none" className="mr-1" />
+                              <span className="text-xs text-amber-600 font-semibold">{user.points} pts</span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 bg-white p-6 rounded-xl shadow-md overflow-hidden relative">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="text-lg font-bold">Energy Generation Progress</h4>
+            <Badge variant="outline" className="bg-gradient-to-r from-green-50 to-green-100 text-green-700 border-green-200">
+              On Track
+            </Badge>
+          </div>
+          
+          <div className="relative">
+            <div className="h-16 w-full bg-gray-50 rounded-lg relative overflow-hidden">
+              {[25, 50, 75].map((milestone) => (
+                <div key={milestone} className="absolute top-0 bottom-0 border-r border-dashed border-gray-200" style={{ left: `${milestone}%` }}>
+                  <div className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-gray-100 border border-gray-200"></div>
+                </div>
+              ))}
+              
+              <div 
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-noizify-primary to-noizify-secondary rounded-l-lg"
+                style={{ width: '68%' }}
+              >
+                <div className="absolute top-0 right-0 bottom-0 w-24 bg-gradient-to-r from-transparent to-white/20"></div>
+              </div>
+              
+              <div 
+                className="absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-lg border-2 border-noizify-accent flex items-center justify-center z-10"
+                style={{ left: '68%' }}
+              >
+                <div className="w-3 h-3 rounded-full bg-noizify-accent"></div>
+              </div>
+            </div>
+            
+            <div className="flex justify-between mt-2">
+              <span className="text-xs text-gray-500">Start</span>
+              <span className="text-xs text-gray-500">Current: 68%</span>
+              <span className="text-xs text-gray-500">Goal: 100%</span>
+            </div>
+          </div>
+          
+          <div className="mt-4 pt-4 border-t border-gray-100 grid grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-xl font-bold text-noizify-primary">24 kWh</p>
+              <p className="text-xs text-gray-500">Energy Generated</p>
+            </div>
+            <div>
+              <p className="text-xl font-bold text-noizify-secondary">5.2 kWh</p>
+              <p className="text-xs text-gray-500">This Week</p>
+            </div>
+            <div>
+              <p className="text-xl font-bold text-noizify-accent">35 kWh</p>
+              <p className="text-xs text-gray-500">Target</p>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold mb-4">Achievements</h3>
+          <h3 className="text-2xl font-bold mb-4">Navigation</h3>
           <div className="inline-flex bg-white rounded-full p-2 shadow-md">
             <div className="px-6 py-2 text-center border-r border-gray-200">
               <div className="text-noizify-primary">
