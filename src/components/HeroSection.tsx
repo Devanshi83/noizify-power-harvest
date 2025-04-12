@@ -2,10 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
-import { AudioWaveform } from "lucide-react";
+import { AudioWaveform, UserRound, Zap, Battery, Shield } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
 
 const HeroSection = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [progressValue, setProgressValue] = useState(0);
   
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -17,6 +21,13 @@ const HeroSection = () => {
       y: x * 0.01
     });
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setProgressValue(75);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section className="pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-gradient-to-b from-noizify-light to-white">
@@ -37,6 +48,50 @@ const HeroSection = () => {
                 How It Works
               </Button>
             </div>
+
+            {/* User Profile Section */}
+            <Card className="mt-6 border border-noizify-primary/20 bg-white/80 backdrop-blur-sm overflow-hidden shadow-lg animate-fade-in">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-16 w-16 border-2 border-noizify-primary">
+                    <AvatarImage src="https://i.pravatar.cc/150" alt="User profile" />
+                    <AvatarFallback className="bg-noizify-primary text-white text-xl">JD</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg">Jane Doe</h3>
+                    <p className="text-sm text-gray-600">Energy Contributor</p>
+                    <div className="mt-2">
+                      <Progress 
+                        value={progressValue} 
+                        className="h-2 bg-gray-200"
+                        indicatorClassName="bg-gradient-to-r from-noizify-primary to-noizify-secondary" 
+                      />
+                      <div className="mt-1 flex justify-between text-xs text-gray-600">
+                        <span>Energy Level</span>
+                        <span>{progressValue}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  <div className="flex flex-col items-center justify-center bg-noizify-light rounded-lg p-2">
+                    <Zap className="text-noizify-primary h-5 w-5 mb-1" />
+                    <p className="font-medium text-sm">12.5 kW</p>
+                    <p className="text-xs text-gray-600">Generated</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center bg-noizify-light rounded-lg p-2">
+                    <Battery className="text-noizify-green h-5 w-5 mb-1" />
+                    <p className="font-medium text-sm">84%</p>
+                    <p className="text-xs text-gray-600">Efficiency</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center bg-noizify-light rounded-lg p-2">
+                    <Shield className="text-noizify-secondary h-5 w-5 mb-1" />
+                    <p className="font-medium text-sm">9.2</p>
+                    <p className="text-xs text-gray-600">Impact Score</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
             
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10 pt-4">
               <div>
