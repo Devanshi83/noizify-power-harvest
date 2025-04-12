@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"; 
 
 const MetricCard = ({ 
   icon: Icon,
@@ -14,7 +16,8 @@ const MetricCard = ({
   suffix,
   color,
   iconColor,
-  iconBackground
+  iconBackground,
+  onClick
 }: {
   icon: React.ElementType;
   title: string;
@@ -23,6 +26,7 @@ const MetricCard = ({
   color: string;
   iconColor: string;
   iconBackground: string;
+  onClick?: () => void;
 }) => {
   const [count, setCount] = useState(0);
   
@@ -37,7 +41,10 @@ const MetricCard = ({
   }, [count, value]);
   
   return (
-    <Card className="bg-white hover:shadow-xl transition-all duration-300">
+    <Card 
+      className={`bg-white hover:shadow-xl transition-all duration-300 ${onClick ? 'cursor-pointer' : ''}`}
+      onClick={onClick}
+    >
       <CardContent className="p-5">
         <div className="flex items-center justify-between mb-3">
           <div className={`w-10 h-10 rounded-full ${iconBackground} flex items-center justify-center`}>
@@ -225,6 +232,8 @@ const SimpleChart = () => {
 };
 
 const FeaturesSection = () => {
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
+
   const features = [
     {
       icon: Volume2,
@@ -298,7 +307,8 @@ const FeaturesSection = () => {
       suffix: "h", 
       color: "text-purple-600",
       iconColor: "text-white", 
-      iconBackground: "bg-gradient-to-br from-purple-400 to-purple-600" 
+      iconBackground: "bg-gradient-to-br from-purple-400 to-purple-600",
+      onClick: () => setIsAlertDialogOpen(true)
     },
     { 
       icon: BarChart3, 
@@ -391,6 +401,68 @@ const FeaturesSection = () => {
           ))}
         </div>
 
+        <Dialog open={isAlertDialogOpen} onOpenChange={setIsAlertDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">Alert Details</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 py-4">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Current Status</h3>
+                <Alert className="bg-green-50 border-green-200">
+                  <AlertTitle className="text-green-700 flex items-center">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                    Active
+                  </AlertTitle>
+                  <AlertDescription className="text-green-600">
+                    You're receiving peak time alerts for optimal energy generation
+                  </AlertDescription>
+                </Alert>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Next Peak Time</h3>
+                <div className="bg-purple-50 border border-purple-200 rounded-md p-4 flex items-center space-x-4">
+                  <div className="bg-gradient-to-br from-purple-400 to-purple-600 rounded-full w-10 h-10 flex items-center justify-center shrink-0">
+                    <Clock size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-purple-800">Today, 6 PM - 9 PM</h4>
+                    <p className="text-purple-600 text-sm">High noise level expected in your area</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="border-t border-gray-100 pt-4">
+                <h3 className="text-lg font-semibold mb-2">Upcoming Peak Times</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between px-2">
+                    <div className="flex items-center">
+                      <div className="w-1 h-8 bg-purple-300 rounded-full mr-3"></div>
+                      <span className="text-gray-700">Tomorrow</span>
+                    </div>
+                    <span className="text-gray-500">7 AM - 9 AM</span>
+                  </div>
+                  <div className="flex items-center justify-between px-2">
+                    <div className="flex items-center">
+                      <div className="w-1 h-8 bg-purple-200 rounded-full mr-3"></div>
+                      <span className="text-gray-700">Tomorrow</span>
+                    </div>
+                    <span className="text-gray-500">5 PM - 8 PM</span>
+                  </div>
+                  <div className="flex items-center justify-between px-2">
+                    <div className="flex items-center">
+                      <div className="w-1 h-8 bg-purple-100 rounded-full mr-3"></div>
+                      <span className="text-gray-700">Apr 14</span>
+                    </div>
+                    <span className="text-gray-500">6 PM - 10 PM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+        
         <div className="mb-16">
           <div className="bg-white p-6 rounded-xl shadow-md">
             <h3 className="text-xl font-bold mb-2">Energy Insights</h3>
